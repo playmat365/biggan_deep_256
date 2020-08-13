@@ -1,8 +1,10 @@
 import os
 
 fs_global = []
-for dn in os.listdir():
+for dn in sorted(os.listdir()):
     if not os.path.isdir(dn):
+        continue
+    if dn.startswith('.'):
         continue
     fs = []
     for fn in os.listdir(dn):
