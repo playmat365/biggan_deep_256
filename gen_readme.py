@@ -52,7 +52,7 @@ def main():
     p = s.find(pt)
     if p > 0:
         s = s[:p]
-    s += pt+'\n\n'
+    s += pt+'\n\n点击图片可查看该分类\n\n'
     s += ' '.join(fs_global)
     with open(fn, 'w', encoding='utf-8') as f:
         f.write(s+'\n\n')
