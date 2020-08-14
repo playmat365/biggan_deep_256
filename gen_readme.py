@@ -1,5 +1,7 @@
 import os
 
+root = 'pics'
+
 def dn_sort_key(dn):
     try:
         name, _ = dn.split('_', 1)
@@ -14,7 +16,7 @@ def fn_sort_key(fn):
     except Exception:
         return 0
 
-def proc_subdir(dn):
+def proc_subdir(dn, title):
     fs = []
     for fn in os.listdir(dn):
         if not fn.endswith('.jpg'):
@@ -29,21 +31,21 @@ def proc_subdir(dn):
     s = ' '.join(s)
     fn = os.path.join(dn, 'README.md')
     with open(fn, 'w', encoding='utf-8') as f:
-        title = dn.replace('_', '-')
         f.write(f'# {title}\n\n')
         f.write(s+'\n\n')
 
 def main():
     fs_global = []
-    dns = os.listdir()
+    dns = os.listdir(root)
     dns.sort(key=dn_sort_key)
     for dn in dns:
-        if not os.path.isdir(dn):
-            continue
         if dn.startswith('.'):
             continue
-        proc_subdir(dn)
         title = dn.replace('_', '-')
+        dn = os.path.join(root, dn)
+        if not os.path.isdir(dn):
+            continue
+        proc_subdir(dn, title)
         fs_global.append(f'[![{title}]({dn}/0.jpg)]({dn})')
     fn = 'README.md'
     with open(fn, 'r', encoding='utf-8') as f:
